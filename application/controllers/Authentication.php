@@ -178,7 +178,7 @@ class Authentication extends RestController
         return 'ENCODE('. $string .')';
     }
 
-    # create uniqueId without initial
+    # create uniqueId
     private function createUniqueId() 
 	{
 		return rand(10,90).strtoupper(uniqid()).rand(111,999);

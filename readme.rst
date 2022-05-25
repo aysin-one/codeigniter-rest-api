@@ -1,71 +1,76 @@
 ###################
-What is CodeIgniter
+How to make Codeigniter 3 RESTful API using POSTMAN
 ###################
 
-CodeIgniter is an Application Development Framework - a toolkit - for people
-who build web sites using PHP. Its goal is to enable you to develop projects
-much faster than you could if you were writing code from scratch, by providing
-a rich set of libraries for commonly needed tasks, as well as a simple
-interface and logical structure to access these libraries. CodeIgniter lets
-you creatively focus on your project by minimizing the amount of code needed
-for a given task.
+we are going to create REST API in Codeigniter using POSTMAN in CodeIgniter 3 project. We will create the HTTP request like GET, POST, PUT, DELETE. 
+RESTful Api in Codeigniter is also know as rest web services. We will be using one package called CodeIgniter RestServer to build this rest api in codeigniter 3.
 
 *******************
-Release Information
+ Securing the API
 *******************
 
-This repo contains in-development code for future releases. To download the
-latest stable release please visit the `CodeIgniter Downloads
-<https://codeigniter.com/download>`_ page.
+METHOD - 1:
 
-**************************
-Changelog and New Features
-**************************
+Once your API is built. it needs securing. So the only users who have the access (Login Credentials) can get data through API.
 
-You can find a list of all changes for each release in the `user
-guide change log <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/changelog.rst>`_.
+1. To set the login credentials which is username and password
 
-*******************
-Server Requirements
-*******************
+FILE: application/config/rest.php
 
-PHP version 5.6 or newer is recommended.
+***************************************************
+$config['rest_valid_logins'] = ['auth' => '6283fe5ce9d6a'];
+***************************************************
 
-It should work on 5.3.7 as well, but we strongly advise you NOT to run
-such old versions of PHP, because of potential security and performance
-issues, as well as missing features.
+2. Change these details into 
 
-************
-Installation
-************
+// default
+*****************************
+$config['rest_auth'] = FALSE;
+*****************************
 
-Please see the `installation section <https://codeigniter.com/userguide3/installation/index.html>`_
-of the CodeIgniter User Guide.
+// Change it to
+*******************************
+$config['rest_auth'] = 'basic';
+*******************************
 
-*******
-License
-*******
+3. once we set the $config['rest_auth'] = 'basic' we have to give one more permission to access this as follows:
 
-Please see the `license
-agreement <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/license.rst>`_.
+FILE: application/config/rest.php
 
-*********
-Resources
-*********
+// default
+********************************
+$config['auth_source'] = 'ldap';
+********************************
 
--  `User Guide <https://codeigniter.com/docs>`_
--  `Contributing Guide <https://github.com/bcit-ci/CodeIgniter/blob/develop/contributing.md>`_
--  `Language File Translations <https://github.com/bcit-ci/codeigniter3-translations>`_
--  `Community Forums <http://forum.codeigniter.com/>`_
--  `Community Wiki <https://github.com/bcit-ci/CodeIgniter/wiki>`_
--  `Community Slack Channel <https://codeigniterchat.slack.com>`_
+// Change it to
+****************************
+$config['auth_source'] = '';
+*****************************
 
-Report security issues to our `Security Panel <mailto:security@codeigniter.com>`_
-or via our `page on HackerOne <https://hackerone.com/codeigniter>`_, thank you.
+Now, Open POSTMAN Software and choose Authorization and select TYPE as Basic Auth and then provide your username and password as shown above.
 
-***************
-Acknowledgement
-***************
+METHOD - 2:
 
-The CodeIgniter team would like to thank EllisLab, all the
-contributors to the CodeIgniter project and you, the CodeIgniter user.
+1. set up the  X-API-KEY = '' we have to give one more permission to access this as follows:
+
+FILE: application/config/rest.php
+
+// default
+***********************************
+$config['rest_enable_keys'] = false;
+***********************************
+
+// change it to
+***********************************
+$config['rest_enable_keys'] = true;
+***********************************
+
+****************************
+X-API-KEY = '5ece4797eaf5e';
+*****************************
+
+Step 4: Create database under name of `codeigniter-rest-api` and import it from the root directory of this project.
+
+Step 5: Use the routes given below to send and receive the data through api using POSTMAN: paste in following path: application/config/routes.php
+
+So, Let's get started.
